@@ -9,7 +9,15 @@ const getElementById = (id, elementList) => {
   });
 };
 
+const getIndexById = (id, arr) => {
+  return arr.findIndex((quote) => {
+    // return the index if the there is a match 
+    return quote.id === Number(id);
+  });
+};
+
 module.exports = {
   getRandomElement,
   getElementById,
+  getIndexById,
 };

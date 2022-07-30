@@ -9,7 +9,10 @@ submitButton.addEventListener('click', () => {
     fetch(`/api/quotes/${id}?quote=${quote}&person=${person}`, {
         method: 'PUT',
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log(response);
+        response.json()
+    })
     .then(({quote}) => {
         const updatedQuote = document.createElement('div');
         updatedQuote.innerHTML = `

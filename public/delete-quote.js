@@ -1,24 +1,20 @@
-const submitButton = document.getElementById('submit-changes');
-const updatedQuoteContainer = document.getElementById('edited-quote');
+const submitButton = document.getElementById('delete');
+const toDeleteQuoteContainer = document.getElementById('to-delete-quote');
 
 submitButton.addEventListener('click', () => {
     const id = document.getElementById('id').value; 
-    const quote = document.getElementById('quote').value;
-    const person = document.getElementById('person').value;
 
-    fetch(`/api/quotes/${id}?quote=${quote}&person=${person}`, {
-        method: 'PUT',
+    fetch(`/api/quotes/${id}`, {
+        method: 'DELETE',
     })
     .then(response => response.json())
     .then(({quote}) => {
-        const updatedQuote = document.createElement('div');
-        updatedQuote.innerHTML = `
-        <h3>Congrats, you edited a quote succesfully!</h3>
-        <div class="quote-text">${quote.id}</div>
-        <div class="quote-text">${quote.quote}</div>
-        <div class="attribution">- ${quote.person}</div>
+        console.log(quote);
+        const toDeleteQuote = document.createElement('div');
+        toDeleteQuote.innerHTML = `
+        <h3>Congrats, you deleted a quote succesfully!</h3>
         <p>Go to the <a href="index.html">home page</a> to request and view all quotes.</p>
         `
-        updatedQuoteContainer.appendChild(updatedQuote);
+        toDeleteQuoteContainer.appendChild(toDeleteQuote);
     });
 });

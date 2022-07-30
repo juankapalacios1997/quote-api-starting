@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const { quotes } = require('./data');
-const { getRandomElement, getElementById } = require('./utils');
+const { getRandomElement, getElementById, getIndexById } = require('./utils');
 
 const PORT = process.env.PORT || 4001;
 
@@ -31,12 +31,11 @@ app.get('/api/quotes', (req, res) => {
         res.send({ quotes: quotes.filter(x => x.person === req.query.person) });
     } else {
         res.send({quotes})
-        console.log({quotes});
     }
 })
 
 app.post('/api/quotes', (req, res) => {
-    const newId = quotes.length + 1;
+    const newId = quotes.length;
     const receivedQuote = {
         id: newId,
         quote: req.query.quote,
@@ -89,5 +88,14 @@ app.put('/api/quotes/:id', (req, res) => {
     } else {
         res.status(400).send('Missing Parameter')
     }
-    console.log(quoteId)
+})
+
+app.delete('/api/quotes/:id', (req, res) => {
+    const deleteIndex = getIndexById(req.params.id, quotes);
+    if (deleteIndex !== -1) {
+        quotes.splice(deleteIndex, 1);
+        res.send({quote: quotes[deleteIndex]})
+    } else {
+        res.status(404).send()
+    }
 })
